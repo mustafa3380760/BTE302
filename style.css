@@ -1,0 +1,236 @@
+/* --- GENEL AYARLAR & DEĞİŞKENLER --- */
+:root {
+    --primary: #27ae60;    /* Ana Yeşil */
+    --secondary: #2ecc71;
+    --bg-light: #f8f9fa;
+    --text-dark: #2c3e50;
+    --sidebar-width: 260px;
+    --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* --- DASHBOARD DÜZENİ --- */
+.dashboard {
+    display: flex;
+    width: 100%;
+}
+
+/* --- YAN MENÜ (SIDEBAR) --- */
+.sidebar {
+    width: var(--sidebar-width);
+    background: #ffffff;
+    padding: 30px 20px;
+    border-right: 1px solid #e0e0e0;
+    position: fixed;
+    height: 100vh;
+    z-index: 100;
+}
+
+.logo h2 {
+    color: var(--primary);
+    margin-bottom: 40px;
+    text-align: center;
+    font-weight: 800;
+}
+
+.nav-item {
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.nav-item i { margin-right: 15px; width: 20px; }
+.nav-item:hover { background: #f0fdf4; color: var(--primary); }
+.nav-item.active { background: var(--primary); color: white; }
+
+/* --- ANA İÇERİK ALANI --- */
+.content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.xp-badge {
+    background: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    box-shadow: var(--card-shadow);
+    color: var(--primary);
+}
+
+/* --- KARTLAR & MODÜLLER --- */
+.card, .module-card, .activity-menu, .scenario-box, .matching-container {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 30px;
+}
+
+.modules {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.module-card {
+    width: 180px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border: 1px solid #f0f0f0;
+}
+
+.module-card:hover { transform: translateY(-10px); }
+
+.icon-circle {
+    width: 60px; height: 60px;
+    background: #e8f5e9; color: var(--primary);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 15px; font-size: 24px;
+}
+
+.icon-circle.yellow { background: #fff9c4; color: #f1c40f; }
+.icon-circle.blue { background: #e3f2fd; color: #3498db; }
+
+/* --- ODAK MODU (FIXED & CENTERED) --- */
+.hidden-layout {
+    display: none !important;
+}
+
+/* Soru çözerken ekranın geri kalanını temizleyip tam ortaya alır */
+.full-width-content {
+    margin-left: 0 !important;
+    padding: 0 !important;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    background-color: var(--bg-light);
+}
+
+/* Odak modunda üstteki başlıkları gizle (Görseldeki bozulmayı engeller) */
+.full-width-content header, 
+.full-width-content h1, 
+.full-width-content h3 {
+    display: none !important;
+}
+
+.scenario-area {
+    width: 100%;
+    max-width: 850px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scenario-box, .matching-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    animation: zoomIn 0.3s ease-out;
+}
+
+/* --- SORU ELEMANLARI --- */
+.maraton-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    color: var(--primary);
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+
+#gap-input {
+    width: 100%;
+    max-width: 450px;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#gap-input:focus { border-color: var(--primary); outline: none; }
+
+.btn-select, .btn-opt {
+    border: 2px solid var(--primary);
+    background: white;
+    color: var(--primary);
+    padding: 12px 35px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-select:hover, .btn-opt:hover { background: var(--primary); color: white; }
+
+.btn-opt { width: 100%; max-width: 450px; margin: 8px 0; }
+
+/* --- EŞLEŞTİRME OYUNU --- */
+.matching-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+}
+
+.word-list { width: 180px; }
+
+.word-box, .drop-zone {
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.word-box { background: #f8f9fa; border: 2px solid #ddd; cursor: grab; }
+.drop-zone { background: #eef2f3; border: 2px dashed #ccc; min-height: 55px; }
+.correct-match { background: #d4edda !important; border: 2px solid #28a745 !important; color: #155724; }
+
+/* --- ANIMASYONLAR --- */
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* GERİ BİLDİRİM */
+.feedback-hidden { display: none; }
+.feedback-correct { background: #d4edda; color: #155724; padding: 15px; border-radius: 10px; margin-top: 15px; width: 100%; max-width: 450px; }
+.feedback-wrong { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 10px; margin-top: 15px; width: 100%; max-width: 450px; }
