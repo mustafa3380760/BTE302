@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EN Academy - Oyunlaştırılmış İngilizce Öğrenimi</title>
+    <!-- Stil Dosyası -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome (İkonlar için) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- SOL NAVİGASYON (Sidebar) -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>EN ACADEMY</h2>
+            </div>
+            <nav>
+                <div class="nav-item active" onclick="location.reload()">
+                    <i class="fas fa-home"></i> Ana Sayfa
+                </div>
+                <!-- Oyunlar Butonu -->
+                <div class="nav-item">
+                    <i class="fas fa-gamepad"></i> Oyunlar
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-trophy"></i> Puanlarım
+                </div>
+                <!-- Rozetlerim Butonu -->
+                <div class="nav-item">
+                    <i class="fas fa-certificate"></i> Rozetlerim
+                </div>
+            </nav>
+        </aside>
+
+        <!-- ANA İÇERİK ALANI -->
+        <main class="content">
+            <header>
+                <h1>Hoş Geldin, Öğrenci! 👋</h1>
+                <div class="user-info">
+                    <!-- XP Puanı buraya JS ile yansır -->
+                    <span id="total-xp" class="xp-badge">Puan: 0 XP</span>
+                </div>
+            </header>
+
+            <!-- İlerleme Özeti Bölümü -->
+            <section class="progress-section">
+                <div class="card">
+                    <h3>Genel İlerleme</h3>
+                    <div class="progress-bar-container">
+                        <!-- Dinamik İlerleme Çubuğu -->
+                        <div id="main-progress-bar" class="progress-bar" style="width: 0%;">%0</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ders Modülleri -->
+            <h3 id="modules-header">Ders Modülleri</h3>
+            <section class="modules">
+                <div class="module-card" onclick="openModule('colors')">
+                    <div class="icon-circle"><i class="fas fa-palette"></i></div>
+                    <h4>1. Colors</h4>
+                </div>
+                <div class="module-card" onclick="openModule('animals')">
+                    <div class="icon-circle yellow"><i class="fas fa-paw"></i></div>
+                    <h4>2. Animals</h4>
+                </div>
+                <div class="module-card" onclick="openModule('numbers')">
+                    <div class="icon-circle blue"><i class="fas fa-hashtag"></i></div>
+                    <h4>3. Numbers</h4>
+                </div>
+            </section>
+
+            <!-- MERKEZİ ETKİNLİK ALANI -->
+            <section class="scenario-area">
+                <h3 id="lesson-title">Lütfen Bir Ders Seçin</h3>
+
+                <!-- Aktivite Seçim Menüsü -->
+                <div id="activity-selector" class="activity-menu" style="display:none;">
+                    <p>Hangi etkinliği yapmak istersin?</p>
+                    <div class="selector-buttons">
+                        <button class="btn-select" onclick="showActivity('quiz')">
+                            <i class="fas fa-question-circle"></i> Quiz (10 Soru)
+                        </button>
+                        <button class="btn-select" onclick="showActivity('matching')">
+                            <i class="fas fa-random"></i> Eşleştirme (Toplu Kontrol)
+                        </button>
+                        <button class="btn-select" onclick="startGapFill()">
+                            <i class="fas fa-pen"></i> 25 Soru Maratonu
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- QUIZ (TEST) ALANI -->
+                <div id="quiz-area" class="scenario-box" style="display:none;">
+                    <div class="quiz-content">
+                        <p id="question-text" style="font-size: 24px; margin-bottom: 20px;"></p>
+                        <div class="options" id="options-container"></div>
+                        <div id="feedback-message" class="feedback-hidden"></div>
+                    </div>
+                </div>
+
+                <!-- EŞLEŞTİRME OYUNU ALANI -->
+                <div id="matching-game" class="matching-container" style="display:none;">
+                    <h4 style="margin-bottom: 20px;"><i class="fas fa-sync"></i> Kelime Eşleştirme</h4>
+                    <div class="matching-wrapper">
+                        <div id="english-words" class="word-list"></div>
+                        <div id="turkish-words" class="word-list"></div>
+                    </div>
+                </div>
+
+                <!-- MARATON (BOŞLUK DOLDURMA) ALANI -->
+                <div id="gap-fill-area" class="scenario-box" style="display:none;">
+                    <div class="maraton-header">
+                        <span id="question-number">Soru: 1 / 25</span>
+                        <span id="maraton-score">Puan: 0 / 100</span>
+                    </div>
+                    <div class="gap-content">
+                        <p id="gap-question-text" style="font-size: 26px; margin-bottom: 30px;"></p>
+                        <input type="text" id="gap-input" placeholder="Cevabı yazın..." autocomplete="off">
+                        <div id="gap-feedback" class="feedback-hidden"></div>
+                    </div>
+                </div>
+
+                <!-- ROZETLERİM SAYFASI -->
+                <div id="badges-area" style="display:none;">
+                    <div id="badges-container" style="display: flex; flex-direction: column; gap: 20px;">
+                        <!-- Rozetler JS ile buraya eklenir -->
+                    </div>
+                </div>
+
+                <!-- SAVAŞ UÇAĞI OYUN ALANI -->
+                <div id="games-area" style="display:none;">
+                    <div class="card" style="text-align: center; width: 100%; position: relative;">
+                        <h3><i class="fas fa-plane"></i> Gökyüzü Savaşçısı</h3>
+                        <p>Uçağı hareket ettirmek için fareyi kullan, ateş etmek için tıkla!</p>
+                        <canvas id="gameCanvas" width="600" height="400" style="background: #1a1a2e; border-radius: 15px; cursor: crosshair;"></canvas>
+                        <br>
+                        <button class="btn-select" onclick="location.reload()" style="margin-top: 15px;">Oyundan Çık</button>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <!-- JavaScript Dosyası -->
+    <script src="script.js"></script>
+</body>
+</html>
